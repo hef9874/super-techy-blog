@@ -27,7 +27,7 @@ router.post('/', withAuth, (rec, res) => {
 })
 
 router.delete('/:id', withAuth, (req, res) => {
-    Comment.delete({
+    Comment.destroy({
         where: {
             id: req.params.id
         }
