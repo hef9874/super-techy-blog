@@ -56,5 +56,28 @@ router.get('/signup', (req, res) => {
 });
 
 router.get('/post/:id', async(req, res) => {
+    try {
+        const postDb = await Post.findByPk(req.params.id, {
+          include: [
+            User,
+            {
+              model: Comment,
+              include: [User],
+            },
+          ],
+        });
     
-})
+        if (postData) {
+          // serialize data
+          const post = postDb.get({ plain: true });
+          res.render('post', { post, loggedIn: req.session.loggedIn });
+        } else {
+          res.status(404).end();
+        }
+      } catch (err) {
+        res.status(500).json(err);
+      }
+    });
+
+
+module.exports = router;
