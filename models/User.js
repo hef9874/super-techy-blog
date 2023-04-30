@@ -10,12 +10,16 @@ class User extends Model {
 
 User.init(
     {
-        user_id: {
+        id: {
             type: DataTypes.INTEGER,
             allowNull: false,
             primaryKey: true,
             autoIncrement: true,
-        },
+        }, 
+        user_id: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        }, 
         username: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -24,16 +28,10 @@ User.init(
             type: DataTypes.STRING,
             allowNull: false,
             unique: true,
-            validate: {
-                isEmail: true,
-            },
         },
         password: {
             type: DataTypes.STRING,
             allowNull: false,
-            validate: {
-                len: [3],
-            },
         },
     },
     {
@@ -51,8 +49,8 @@ User.init(
         sequelize, 
         freezeTableName: true,
         underscored: true, 
-        modelName: 'user'
+        modelName: 'user',
     }
-);
+)
 
 module.exports = User;

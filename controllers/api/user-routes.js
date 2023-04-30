@@ -5,7 +5,7 @@ const withAuth = require('../../utils/auth');
 router.get('/', async (req, res) => {
     try {
         const users = await User.findAll();
-        res.status(200).json(err);
+        res.status(200).json(users);
     }
     catch (err) {
         res.status(500).json(err);
@@ -52,7 +52,7 @@ router.post('/login', async (req, res) => {
             }
         });
         if (!userDb) {
-            res.status(400).json({ message: 'There is no user with that email' });
+            res.status(404).json({ message: 'There is no user with that email address' });
             return;
         }
         const rightPassword = await userDb.checkPassword(req.body.password);
@@ -133,4 +133,4 @@ router.delete('/:id', withAuth, async (req, res) => {
     }
 });
 
-modules.export = router;
+module.exports = router;
