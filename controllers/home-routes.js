@@ -6,19 +6,19 @@ const { Post, User, Comment } = require('../models');
 router.get('/', async (req, res) => {
     try {
         const postsDb = await Post.findAll({
-            attributes: ['id', 'title', 'created_at', 'post_content'],
+            attributes: ['id', 'title', 'created_at', 'post_text'],
             include: [
                 {
                     model: Comment,
                     attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
                     include: {
                         model: User,
-                        attributes: 'username',
+                        attributes: ['username'],
                     }
                 },
                 {
                     model: User,
-                    attributes: ['username']
+                    attributes: ['username'],
                 }
             ]
         });

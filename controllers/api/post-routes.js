@@ -7,24 +7,19 @@ const sequelize = require('../../config/connection');
 router.get('/', async (req, res) => {
     try {
         const postDb = await Post.findAll({
-            attributes: [
-                'id',
-                'post_text',
-                'title',
-                'created_at',
-            ],
+            attributes: ['id', 'post_text', 'title', 'created_at'],
             include: [
                 {
                     model: Comment,
                     attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
                     include: {
                         model: User,
-                        attributes: ['username']
+                        attributes: 'username',
                     }
                 },
                 {
                     model: User,
-                    attributes: ['username']
+                    attributes: 'username',
                 },
             ]
         })
@@ -42,24 +37,19 @@ router.get('/:id', async (req, res) => {
             where: {
                 id: req.params.id
             },
-            attributes: [
-                'id',
-                'post_text',
-                'title',
-                'created_at',
-            ],
+            attributes: ['id', 'post_text', 'title', 'created_at'],
             include: [
                 {
                     model: Comment,
                     attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
                     include: {
                         model: User,
-                        attribute: ['username']
+                        attribute: 'username',
                     }
                 },
                 {
                     model: User,
-                    attributes: ['username']
+                    attributes: 'username',
                 },
             ]
         })
@@ -77,9 +67,9 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', withAuth, async (req, res) => {
     try {
-        postDb = await Post.create({
+        const postDb = await Post.create({
             title: req.body.title,
-            post_content: req.body.post_text,
+            post_text: req.body.post_text,
             user_id: req.session.user_id,
         })
         res.json(postDb)
@@ -94,7 +84,7 @@ router.put('/:id', withAuth, async (req, res) => {
         const postDb = Post.update(
             {
                 title: req.body.title,
-                post_content: req.body.post_text,
+                post_text: req.body.post_text,
             },
             {
                 where: {
@@ -102,13 +92,11 @@ router.put('/:id', withAuth, async (req, res) => {
                 }
             }
         )
-            .then(postDb => {
-                if (!postDb) {
-                    res.status(404).json({ message: 'ID does not exist' });
-                    return;
-                }
-                res.json(postDb);
-            })
+        res.json(postDb)
+        if (!postDb) {
+            res.status(404).json({ message: 'ID does not exist' });
+            return;
+        }
     } catch (err) {
         console.log(err);
         res.status(500).json(err);
@@ -116,24 +104,22 @@ router.put('/:id', withAuth, async (req, res) => {
 });
 
 router.delete('/:id', withAuth, async (req, res) => {
-    try{
+    try {
         console.log('id', req.params.id);
-    const postDb = await Post.destroy({
-        where: {
-            id: req.params.id,
-        }
-    })
-        .then(postDb => {
-            if (!postDb) {
-                res.status(404).json({ message: 'ID does not exist' });
-                return;
+        const postDb = await Post.destroy({
+            where: {
+                id: req.params.id,
             }
-            res.json(postDb);
         })
-    } catch(err) {
-            console.log(err);
-            res.status(500).json(err);
-        };
+        res.json(postDb)
+        if (!postDb) {
+            res.status(404).json({ message: 'ID does not exist' });
+            return;
+        }
+    } catch (err) {
+        console.log(err);
+        res.status(500).json(err);
+    };
 });
 
 module.exports = router;

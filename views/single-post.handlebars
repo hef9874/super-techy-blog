@@ -1,1 +1,18 @@
+{{> post-text post }}
 
+{{#if loggedIn }}
+
+<form class="comments">
+    <div>
+        <textarea class="text-area" id="comment-body"></textarea>
+    </div>
+
+<div>
+    <button class="button" type="submit">Post Comment</button>
+</div>
+
+</form>
+
+{{/if}}
+
+{{> comments post.comments}}

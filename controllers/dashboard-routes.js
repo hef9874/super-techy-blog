@@ -10,19 +10,19 @@ router.get('/', withAuth, async (req, res) => {
             where: {
                 user_id: req.session.user_id,
             },
-            attributes: ['id', 'title', 'created_at', 'post_content'],
+            attributes: ['id', 'title', 'created_at', 'post_text'],
             include: [
                 {
                     model: Comment,
                     attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
                     include: {
                         model: User,
-                        attributes: 'username',
+                        attributes: ['username'],
                     }
                 },
                 {
                     model: User,
-                    attributes: 'username',
+                    attributes: ['username'],
                 }
             ]
         });
@@ -43,11 +43,11 @@ router.get('/edit/:id', withAuth, async (req, res) => {
             where: {
                 id: req.params.id,
             },
-            attributes: ['id', 'title', 'created_at', 'post_content'],
+            attributes: ['id', 'title', 'created_at', 'post_text'],
             include: [
                 {
                     model: User,
-                    attributes: 'username',
+                    attributes: ['username'],
                 }
             ]
         })
@@ -76,24 +76,19 @@ router.get('/create', withAuth, async (req, res) => {
                 // use the ID from the session
                 user_id: req.session.user_id
             },
-            attributes: [
-                'id',
-                'title',
-                'created_at',
-                'post_content'
-            ],
+            attributes: ['id','title', 'created_at', 'post_text' ],
             include: [
                 {
                     model: Comment,
                     attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
                     include: {
                         model: User,
-                        attributes: ['username', 'twitter', 'github']
+                        attributes: 'username'
                     }
                 },
                 {
                     model: User,
-                    attributes: ['username', 'twitter', 'github']
+                    attributes: 'username'
                 }
             ]
         });
