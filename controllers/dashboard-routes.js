@@ -60,15 +60,16 @@ router.get('/edit/:id', withAuth, async (req, res) => {
         const postEdit = editDb.get({ plain: true })
 
         res.render('edit-post', {
-            postEdit,
+            postEdit: postEdit,
             loggedIn: true
-        })
+        });
 
     } catch (err) {
         console.log(err);
         res.status(500).json(err);
     }
 });
+
 
 router.get('/create', withAuth, async (req, res) => {
     try {

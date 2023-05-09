@@ -86,3 +86,14 @@ button {
   margin: 20px 0px 10px 0px;
   cursor: pointer;
 }
+
+#posts {
+  border-color: var(--light);
+  border-width: 2px;
+  border-radius: 6px;
+  border-style: solid;
+  align-content: center;
+  text-align: center;
+  width: 60%;
+  margin:auto
+}
