@@ -5,7 +5,7 @@ const seedDb = [
         user_id: "1",
         username: "engineer123",
         email: "en@gmail.com",
-        password: "Password",
+        password: "Password12345",
     },
     {
         user_id: "2",

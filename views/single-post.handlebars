@@ -1,8 +1,9 @@
-{{> post-text post }}
+{{ this.post_text }} 
+{{ this.post }}
 
 {{#if loggedIn }}
 
-<form class="comments">
+<form class="comments" id="form">
     <div>
         <textarea class="text-area" id="comment-body"></textarea>
     </div>
@@ -15,4 +16,5 @@
 
 {{/if}}
 
-{{> comments post.comments}}
+{{ this.comment }}
+{{ this.post.comments }}

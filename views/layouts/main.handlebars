@@ -6,31 +6,32 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
     <title>Tech Thoughts</title>
-    <link rel="stylesheet" href="../../public/css/styles.css">
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 
 <header>
-    <h1>Super Techy Blog</h1>
-    <nav class="nav-bar">
-        <ul>
-            {{#if loggedIn}}
-            <li class="li-inline nav-item"><a href="/dashboard">Dashboard</a></li>
-            <li class="li-inline nav-item"><a href="/home">Home</a></li>
-            <li class="li-inline nav-item"><a href="/logout">Logout</a></li>
-            {{#else}}
-            <li class="li-inline nav-item"><a href="/home">Home</a></li>
-            <li class="li-inline nav-item"><a href="/login">Login</a></li>
-            {{/if}}
-        </ul>
+    <nav class="nav-bar"></nav>
+    <ul>
+        {{#if loggedIn}}
+        <li class="li-inline"><a href="/dashboard">Dashboard</a></li>
+        <li class="li-inline"><a href="/">Home</a></li>
+        <li class="li-inline" id="logout"><a href="/logout">Logout</a></li>
+        {{else}}
+        <li class="li-inline"><a href="/">Home</a></li>
+        <li class="li-inline"><a href="/login">Login</a></li>
+        {{/if}}
+    </ul>
     </nav>
+    <div>
+        <h1 class="blog-title">Tech Blog</h1>
+    </div>
 </header>
 
-<div>
+<div id="body">
     {{{ body }}}
 </div>
-
 {{#if loggedIn}}
-<script src="/javascript/logout.js"></script>
+<script src="/js/logout.js"></script>
 {{/if}}
 
 </html>

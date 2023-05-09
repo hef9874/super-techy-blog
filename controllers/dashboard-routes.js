@@ -6,6 +6,7 @@ const withAuth = require('../utils/auth');
 //making dashboard with posts
 router.get('/', withAuth, async (req, res) => {
     try {
+        console.log('hi')
         const dashboardDb = await Post.findAll({
             where: {
                 user_id: req.session.user_id,
@@ -28,7 +29,7 @@ router.get('/', withAuth, async (req, res) => {
         });
         // serialize data 
         const allPosts = dashboardDb.map(post => post.get({ plain: true }));
-        res.render('dashboard', { allPosts, loggedIn: true });
+        res.render('dashboard', { allPosts, loggedIn: req.session.loggedIn });
 
     } catch (err) {
         console.log(err);
@@ -80,21 +81,20 @@ router.get('/create', withAuth, async (req, res) => {
             include: [
                 {
                     model: Comment,
-                    attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
                     include: {
                         model: User,
-                        attributes: 'username'
+                        attributes: ['username']
                     }
                 },
                 {
                     model: User,
-                    attributes: 'username'
+                    attributes: ['username']
                 }
             ]
         });
 
         const newPost = create.map(post => post.get ({ plain: true }));
-        res.render('newPost', {newPost, loggedIn:true });
+        res.render('create-post', {newPost, loggedIn:true });
 
       } catch(err) {
         console.log(err);

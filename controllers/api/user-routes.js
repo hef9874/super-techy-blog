@@ -44,8 +44,33 @@ router.get('/:id', async (req, res) => {
     }
 });
 
+router.post("/signup", async (req, res) => {
+    try {
+        console.log('req', req.body)
+      const newUser = await User.create({
+        username: req.body.username,
+        email: req.body.email,
+        password: req.body.password,
+      });
+  
+      console.log("New User Added!", newUser);
+  
+      req.session.save(() => {
+        req.session.user_id = newUser.user_id;
+        req.session.username = newUser.username;
+        req.session.email = newUser.email;
+        req.session.loggedIn = true;
+  
+        res.json(newUser);
+      });
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  });
+
 router.post('/login', async (req, res) => {
     try {
+        console.log("login note")
         const userDb = await User.findOne({
             where: {
                 email: req.body.email,
@@ -57,15 +82,21 @@ router.post('/login', async (req, res) => {
         }
         const rightPassword = await userDb.checkPassword(req.body.password);
 
+
         if (!rightPassword) {
             res.status(400).json({ message: 'Wrong password' });
             return;
         }
+
+        req.session.save(() => {
+
         req.session.user_id = userDb.id;
         req.session.username = userDb.username;
         req.session.loggedIn = true;
 
         res.json({ user: userDb, message: 'Logged in' });
+        })
+
     } catch (err) {
         console.log(err);
         res.status(500).json(err);

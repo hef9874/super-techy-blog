@@ -1,22 +1,88 @@
 :root {
-    --primary: #ccdad1;
-    --secondary: #9caea9;
-    --tertiary: #788585;
-    --light-dark: #6f6866;
-    --dark: #38302e;
-    --border-radius: 0.3rem;
-  }
-  
-  * {
-    box-sizing: border-box;
-  }
-  
-  body {
-    background-color: var(--primary);
-    margin: 0;
-    padding: 0;
-    font-family: "IBM Plex Sans", sans-serif;
-    color: var(--dark);
-    line-height: 1.5;
-    font-size: 16px;
-  }
+  --primary: #b4f217;
+  --light: white;
+  --secondary: rgb(89, 210, 246);
+  --dark: #1a1919;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--dark);
+  font-family: 'Courier New', Courier, monospace;
+  color: white;
+}
+
+ul {
+  list-style-type: none;
+  color: var(--light);
+  float:left;
+  align-items: flex-start;
+  display: inline-flex;
+  justify-content: space-around;
+  width: 20%;
+  padding: 10px;
+  margin-right: auto;
+}
+
+header {
+  width: 100%;
+  height: auto;
+  align-items: center;
+  position: absolute;
+  padding-top: 30px;
+  display: flex;
+  background-color: #383636;
+}
+
+.blog-title {
+  padding-right: 40px;
+}
+
+a{
+  text-decoration: none;
+  color: var(--light);
+}
+
+a:hover {
+  color: var(--secondary)
+}
+
+#body {
+  padding-top: 150px;
+}
+
+h1 {
+  color: var(--primary);
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+#form {
+  border-color: var(--light);
+  border-width: 2px;
+  border-radius: 6px;
+  border-style: solid;
+  align-content: center;
+  text-align: center;
+  width: 50%;
+  padding: 30px;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+button {
+  border-color: var(--light);
+  background-color: var(--dark);
+  color: var(--light);
+  border-radius: 4px;
+  border-style: solid;
+  transition: background-color .1s;
+  padding: 8px 20px 8px 20px;
+  margin: 20px 0px 10px 0px;
+  cursor: pointer;
+}

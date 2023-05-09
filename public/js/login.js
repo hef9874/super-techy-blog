@@ -1,7 +1,7 @@
-const userLogin = async function(event) {
+const userLoginHandler = async function(event) {
     event.preventDefault();
-    const email = document.querySelector('#email');
-    const password = document.querySelector('#password');
+    const email = document.getElementById('email-input');
+    const password = document.getElementById('password-input');
   
     const input = await fetch('/api/user/login', {
       method: 'POST',
@@ -15,10 +15,11 @@ const userLogin = async function(event) {
     if (input.ok) {
       document.location.replace('/dashboard');
     } else {
+      console.log('Input Not Okay, Input Bad')
       alert('Please try to login again');
     }
   };
   
   document
-    .querySelector('.form-login')
-    .addEventListener('submit', userLogin);
+    .getElementById('login-btn')
+    .addEventListener('click', userLoginHandler);

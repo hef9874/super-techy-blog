@@ -1,24 +1,23 @@
-<section id="login-section" class="login-section">
+<section class="login-section" id="form">
   <div class="container justify-content-center">
     <form class="flex-column justify-content-center align-items-center">
-      <h1 class="login">Hello! Please Log In</h1>
+      <h1 class="login">Hello, Please Log In</h1>
       <div class="form-login">
-        <input type="email" class="email-input" id="email" placeholder="Your Email Here">
         <label class="text-dark">Email Address</label>
+        <input type="email" class="email-input" id="email-input" placeholder="Your Email Here">
+
       </div>
       <div class="form-password">
-        <input
-          type="password"
-          id="password"
-          placeholder="Password Here"
-        />
         <label class="password">Password</label>
+        <input type="password" id="password-input" placeholder="Password Here" />
       </div>
 
       <button class="submit" type="submit" id="login-btn">Log in</button>
-      <h5 class="">Join Us!</h5>
-      <a href="/signup"  class="signup">Sign Up</a>
+      <br>
+      <a href="/signup" class="signup">Sign Up</a>
     </form>
   </div>
-  <script src="/js/login.js"></script>
 </section>
+
+{{!-- <script src="../public/js/login.js"></script> --}}
+<script src="/js/login.js"></script>
