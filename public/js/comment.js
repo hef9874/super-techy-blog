@@ -1,28 +1,30 @@
-async function commentFormHandler(e) {
-    e.preventDefault();
+    const getText = () => {
+      const commentText = document.getElementById("comment-text").value;
+      return commentText;
+    };
+    
+    const getId = () => {
+      const post_id = document.getElementById("post-id").innerText;
+      return post_id;
+    };
 
-    const commentText = document.getElementById('comment-text');
-    const post_id = window.location.toString().split('/')[
-      window.location.toString().split('/').length - 1
-    ];
-
-    if(commentText) {
-        const input = await fetch ('api/comment', {
-            method: 'POST',
-          body: JSON.stringify({
-            post_id,
-            commentText
-          }),
-          headers: {
-            'Content-Type': 'application/json'
-          }
+    const createComment = async () => {
+      try {
+        const comment_text = await getText();
+        const post_id = await getId();
+        const input = await fetch("/api/user/comment", {
+          method: "POST",
+          body: JSON.stringify({ post_id, comment_text }),
+          headers: { "Content-Type": "application/json" },
         });
-        if(input.ok) {
-            document.location.reload();
-        } else {
-            alert(input.statusText);
+        console.log("this is the response", input);
+        if (response.ok) {
+          alert("Comment Added!");
+          document.location.replace(`/blog/${post_id}`);
         }
-     };
-};
+      } catch (err) {
+        console.log(err);
+      }
+    };  
 
-document.querySelector('.comments').addEventListener('submit', commentFormHandler);
+document.getElementById('comment-btn').addEventListener('click', createComment);

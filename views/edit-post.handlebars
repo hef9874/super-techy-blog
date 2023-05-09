@@ -14,7 +14,7 @@
       <a href="/post/{{post.id}}">{{post.comments.length}} {{format_plural "comment" post.comments.length}}</a>
     </div>
     <button type="button" class="delete-button">Delete</button>
-    <button type="button" class="save-button">Save</button>
+    <button type="button" id="save-button">Save</button>
 </form>
 </section>
 {{> comment post.comments}}
