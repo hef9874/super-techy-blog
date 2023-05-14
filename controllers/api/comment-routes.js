@@ -2,6 +2,8 @@ const router = require('express').Router();
 const { Comment } = require('../../models');
 const withAuth = require('../../utils/auth');
 
+
+//get all
 router.get('/', async (req, res) => {
     try {
         const commentDb = await Comment.findAll()
@@ -12,6 +14,7 @@ router.get('/', async (req, res) => {
     }
 });
 
+//new comment
 router.post('/', withAuth, async (req, res) => {
     try {
       const { comment_text, post_id } = req.body;
@@ -35,19 +38,25 @@ router.post('/', withAuth, async (req, res) => {
   
 
 
-router.delete('/:id', withAuth, (req, res) => {
-    Comment.destroy({
+  router.delete('/:id', withAuth, async (req, res) => {
+    try {
+      const comment = await Comment.destroy({
         where: {
-            id: req.params.id
-        }
-    })
-        .then(commentDb => {
-            if (!commentDb) {
-                console.log(err)
-                res.status(404).json({ message: 'Sorry, there are no comments for this user' });
-                return;
-            }
-        });
-});
+          id: req.params.id,
+          user_id: req.session.user_id
+        },
+      });
+  
+      if (!comment) {
+        res.status(404).json({ message: 'Sorry, the comment could not be found or you are not authorized to delete it.' });
+        return;
+      }
+  
+      res.json({ message: 'Comment deleted successfully.' });
+    } catch (err) {
+      console.log(err);
+      res.status(500).json(err);
+    }
+  });
 
 module.exports = router;

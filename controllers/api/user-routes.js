@@ -68,40 +68,41 @@ router.post("/signup", async (req, res) => {
     }
   });
 
-router.post('/login', async (req, res) => {
+  router.post('/login', async (req, res) => {
     try {
-        console.log("login note")
-        const userDb = await User.findOne({
-            where: {
-                email: req.body.email,
-            }
-        });
-        if (!userDb) {
-            res.status(404).json({ message: 'There is no user with that email address' });
-            return;
-        }
-        const rightPassword = await userDb.checkPassword(req.body.password);
-
-
-        if (!rightPassword) {
-            res.status(400).json({ message: 'Wrong password' });
-            return;
-        }
-
-        req.session.save(() => {
-
-        req.session.user_id = userDb.id;
-        req.session.username = userDb.username;
-        req.session.loggedIn = true;
-
-        res.json({ user: userDb, message: 'Logged in' });
-        })
-
+      console.log("login note");
+      const user = await User.findOne({
+        where: {
+          email: req.body.email,
+        },
+      });
+  
+      if (!user) {
+        res.status(404).json({ message: 'There is no user with that email address' });
+        return;
+      }
+  
+      const rightPassword = user.checkPassword(req.body.password);
+  
+      if (!rightPassword) {
+        res.status(400).json({ message: 'Invalid email or password' });
+        return;
+      }
+  
+      req.session.user_id = user.id;
+      req.session.username = user.username;
+      req.session.email = user.email;
+      req.session.loggedIn = true;
+  
+      req.session.save(() => {
+        res.json({ user: user, message: 'Logged in' });
+      });
     } catch (err) {
-        console.log(err);
-        res.status(500).json(err);
+      console.log(err);
+      res.status(500).json(err);
     }
-});
+  });
+  
 
 router.post('/logout', withAuth, async (req, res) => {
     try {

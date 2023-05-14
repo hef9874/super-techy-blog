@@ -4,11 +4,12 @@
     <h1>Your Dashboard</h1>
     <div class="header">
         <a href="/dashboard/create/"><button id="create-post">Create New Post</button></a>
-            {{#if posts.length}}
     </div>
+        {{#if posts.length}}
     <div id="posts">
     {{#each posts as |post|}}
         {{> post-content post}}
+
     <br>
     <a href="/dashboard/edit/{{post.id}}"><button class="edit-post">Edit Post</button></a>
     </div>
@@ -20,5 +21,4 @@
     </div>
 </section>
 
-<script src="/js/comment.js"></script>
 
